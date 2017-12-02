@@ -1,55 +1,61 @@
-# dub package manager [![Build Status](https://travis-ci.org/D-Programming-Language/dub.svg?branch=master)](https://travis-ci.org/D-Programming-Language/dub) [![Coverage Status](https://coveralls.io/repos/D-Programming-Language/dub/badge.svg)](https://coveralls.io/r/D-Programming-Language/dub)
+# Менеджер пакетов ДУБ (dub) [![Статус построения](https://travis-ci.org/D-Programming-Language/dub.svg?branch=master)](https://travis-ci.org/D-Programming-Language/dub) [![Coverage Status](https://coveralls.io/repos/D-Programming-Language/dub/badge.svg)](https://coveralls.io/r/D-Programming-Language/dub)
 
-Package and build manager for [D](http://dlang.org/) applications and libraries.
+Менеджер пакетов и построения [D](http://dlang.org/) приложений и библиотек.
 
-There is a central [package registry](https://github.com/D-Programming-Language/dub-registry/) located at <http://code.dlang.org>.
+Существует центральный [реестр пакетов](https://github.com/D-Programming-Language/dub-registry/) , расположенный на <http://code.dlang.org>.
 
-## Introduction
+## Отношение "Дуба" к "Динрусу"
 
-DUB emerged as a more general replacement for [vibe.d's](http://vibed.org/) package manager. It does not imply a dependecy to vibe.d for packages and was extended to not only directly build projects, but also to generate project files (currently [VisualD](https://github.com/rainers/visuald)).
-[Mono-D](http://mono-d.alexanderbothe.com/) also support the use of dub.json (dub's package description) as project file.
+Для применения в Динрус Дуб требует небольшого портирования. Планируется [создание аналогичного центра пакетов](https://github.com/dinrus), где уже есть начальные пакеты. Соответственно, нужна переработка кода "Дуба" под именно эту задачу для Динрус. Как Вы понимаете, Динрус может стать в недалёком будущем результатом общих усилий. Он будет широко использоваться в рускоязычных областях, например, детьми раннего возраста, которые априорно нацелены на то, чтобы понять как можно глубже программирование, не тратя лишних усилий на освоение иностранного языка (т.е. ОСВАИВАЯ ЕГО ПАРАЛЛЕЛЬНО, по мере сил и способностей). Кроме того, Динрус может стать в будущем весьма универсальным языком. Не случайно за основу взят язык D. Сейчас ведётся работа по [созданию особого универсального компилятора ДРК(DRC)](https://github.com/DinrusGroup/DRC). Несомненно, развитие этого проекта откроет языку новые радужные перспективы.
 
-The project's philosophy is to keep things as simple as possible. All that is needed to make a project a dub package is to write a short [dub.json](http://code.dlang.org/publish) file and put the source code into a `source` subfolder. It *can* then be registered on the public [package registry](http://code.dlang.org) to be made available for everyone. Any dependencies specified in `dub.json` are automatically downloaded and made available to the project during the build process.
+## Введение
 
-## Key features
+DUB возник как более общая замена менеджеру пакетов [vibe.d](http://vibed.org/). Пакеты не зависимы от vibe.d , Дуб расширен не только с целью прямого построения пакетов, но также и на генерацию файлов проектов (в данный момент для [VisualD](https://github.com/rainers/visuald)).
+[Mono-D](http://mono-d.alexanderbothe.com/) также поддерживает использование dub.json (описания пакетов Дуба) как файл проекта.
 
- - Simple package and build description not getting in your way
- - Integrated with Git, avoiding maintainance tasks such as incrementing version numbers or uploading new project releases
- - Generates VisualD project/solution files, integrated into MonoD
- - Support for DMD, GDC and LDC (common DMD flags are translated automatically)
- - Supports development workflows by optionally using local directories as a package source
+Философия этого проекта - оставлять вещи как можно более простыми. Всё, что нужно сделать для построение пакета Дуба,- написать короткий файл [dub.json](http://code.dlang.org/publish) и поместить исходники в подпапку `source`. Затем он *может быть* зарегистрирован в публичном [реестре пакетов](http://code.dlang.org), чтобы стать доступным для каждого. Все зависимости, указанные в `dub.json` автоматически загружаются и становятся доступными проекту в процессе его построения. 
 
-## Future direction
+В отношении Динруса становится ясно, что будет нужно для него сделать ещё. (Делайте выводы.)
 
-To make things as flexible as they need to be for certain projects, it is planned to gradually add more options to the [package file format](http://code.dlang.org/package-format) and eventually to add the possibility to specify an external build tool along with the path of it's output files. The idea is that DUB provides a convenient build management that suffices for 99% of projects, but is also usable as a bare package manager that doesn't get in your way if needed.
+## Ключевые особенности
 
-## Installation
+ - Простое описание пакетов и построения, которое не осложняет работу над целевым результатом
+ - Интеграция с Git, которая позволяет избегать задач обслуживания, таких как увеличение номеров версий или сброс на сервер новых выпусков (релизов) проекта
+ - Генерированные файлы проекта/решения для VisualD, интеграция с MonoD
+ - Поддержка DMD, GDC и LDC (общие флаги DMD транслируются автоматически)
+ -Поддерживает поточную разработку, необязательно используя локальные папки в качестве источников пакета
 
-DUB comes [precompiled](http://code.dlang.org/download) for Windows, OS X and Linux. It needs to have libcurl with SSL support installed (except on Windows).
+## Будущее направление
 
-The `dub` executable then just needs to be accessible from `PATH` and can be invoked from the root folder of any DUB enabled project to build and run it.
+Чтобы вещи стали как можно более гибкими для некоторых проектов, планируется постепенно добавлять дополнительные опции к [файловому формату пакета](http://code.dlang.org/package-format) , и - по возможности - добавить "возможность" (!) определения внешнего инструмента построения вместе с папкой вывода файлов проекта. Идея в том, чтобы DUB предложил удобное управление построением, удовлетворяющее 99% проектов, но никак не препятствовал в работе.
 
-If you want to build for yourself, just install [DMD](http://dlang.org/download.html) and libcurl development headers and run `./build.sh`. On Windows you can simply run `build.cmd` without installing anything besides DMD.
+## Установка
 
-### Arch Linux
+DUB идёт [прекомпилированным](http://code.dlang.org/download) для Windows, OS X и Linux. Для него требуется libcurl с поддержкой SSL (кроме Windows).
 
-Михаил Страшун (Dicebot) maintains a dub package of the latest release in `Community`, for [x86_64](https://www.archlinux.org/packages/community/x86_64/dub/) and [i686](https://www.archlinux.org/packages/community/i686/dub/).
-Moritz Maxeiner has created a PKGBUILD file for GIT master: <https://aur.archlinux.org/packages/dub-git/>
+Нужно лишь, чтобы `dub` exe был доступен через переменную среды `PATH`, и мог вызываться из корневой папки любых DUB enabled проектов, с тем чтобы строить и выполнять их.
+
+Если хотите построить его самостоятельно, просто установите [DMD](http://dlang.org/download.html) и разработочные заголовки libcurl и выполните `./build.sh`. На Windows можно просто выполнить `build.cmd`, не устанавливая ничего кроме DMD.
+
+### Архитектура Linux
+
+Михаил Страшун (Dicebot) поддерживает пакет Дуба последнего релиза в `Community`, для [x86_64](https://www.archlinux.org/packages/community/x86_64/dub/) и [i686](https://www.archlinux.org/packages/community/i686/dub/).
+Moritz Maxeiner создал файл PKGBUILD для GIT master: <https://aur.archlinux.org/packages/dub-git/>
 
 ### Debian/Ubuntu Linux
 
-Jordi Sayol maintains a DEB package as part of his [D APT repository](http://d-apt.sourceforge.net). Run `sudo apt-get install dub` to install.
+Jordi Sayol поддерживает пакет DEB как часть своего [D APT репозитория](http://d-apt.sourceforge.net). Выполните `sudo apt-get install dub` для установки.
 
 ### OS X
 
-Chris Molozian has added DUB to [Homebrew](http://mxcl.github.io/homebrew/). Use `brew install dub` to install the stable version, optionally adding `--HEAD`/`--devel` to install the latest git master or development release respectively.
+Chris Molozian добавил DUB в [Homebrew](http://mxcl.github.io/homebrew/). Используйте `brew install dub`, чтобы установить стабильную версию, дополнительно добавляя `--HEAD`/`--devel` для устанки свежайшего гит-мастера или релиза разработки соответственно.
 
-There is also a [MacPorts](https://www.macports.org/) package available. Type `sudo port install dub` to install the latest stable version.
+Есть также пакет [МакПорты](https://www.macports.org/) . Наберите `sudo port install dub` для установки последней стабильной версии.
 
 ### Windows
 
-Daniel Jost maintains a dub package on [chocolatey](https://chocolatey.org/packages/dub). Use `cinst dub` or `cinst dub -version #.#.#` to install stable or a custom version respectively.
+Daniel Jost поддерживает пакет dub на [chocolatey](https://chocolatey.org/packages/dub). Используйте `cinst dub` или `cinst dub -version #.#.#` , чтобы установить стабильную или адаптированную версию, соответственно.
 
-## Using DUB as a library
+## Использование DUB как библиотеки
 
-The [DUB package of DUB](http://code.dlang.org/packages/dub) can be used as a library to load or manipulate packages, or to resemble any functionality of the command line tool. The former task can be achieved by using the [Package class](https://github.com/D-Programming-Language/dub/blob/master/source/dub/package_.d#L40). For examples on how to replicate the command line functionality, see [commandline.d](https://github.com/D-Programming-Language/dub/blob/master/source/dub/commandline.d).
+[Пакет DUB самого DUB](http://code.dlang.org/packages/dub) может использоваться как библиотека для загрузки и манипулирования пакетами, либо для имитации функционала инструментов командной строки. Последняя задача достигается использованием  [класса Package](https://github.com/D-Programming-Language/dub/blob/master/source/dub/package_.d#L40). Примеры для репликации функционала командной строки [смотри здесь - commandline.d](https://github.com/D-Programming-Language/dub/blob/master/source/dub/commandline.d).
